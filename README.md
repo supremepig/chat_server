@@ -21,8 +21,19 @@ ubuntu 18.04
 mysql 
 ```bash
 sudo apt install mysql-server
-sudo apt-get install mysql-server
 sudo apt-get install libmysqlclient-dev
+'''
+修改mysql默认密码
+'''bash
+sudo systemctl start mysql
+sudo cat /etc/mysql/debian.cnf
+mysql -u debian-sys-maint -p
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '123456';
+FLUSH PRIVILEGES;
+exit;
+'''
+'''bash
 mysql -u root -p
 set character_set_server=utf8;
 create database chat;
