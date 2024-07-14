@@ -3,7 +3,7 @@
 // 数据库配置信息
 static string server = "127.0.0.1";
 static string user = "root";
-static string password = "cza";
+static string password = "123456";
 static string dbname = "chat";
 
 MySQL::MySQL()
@@ -27,6 +27,9 @@ bool MySQL::connect()
     {
         mysql_query(_conn, "set names gbk"); // 中文支持
         LOG_INFO << "connect mysql success";
+    }
+    else {
+        LOG_INFO << "connect mysql failed";
     }
     return p;
 }

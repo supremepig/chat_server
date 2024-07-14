@@ -1,38 +1,46 @@
-# see /test/bot/temporary_message.py
 import socket
-import time
-import poe
-import logging
 import sys
+from sparkai.llm.llm import ChatSparkLLM, ChunkPrintHandler
+from sparkai.core.messages import ChatMessage
+
+SPARKAI_URL = 'wss://spark-api.xf-yun.com/v3.1/chat'
+SPARKAI_APP_ID = '34908c2f'
+SPARKAI_API_SECRET = 'ODYwY2RmMGEyNTI4M2QwYjdiZTliOGYz'
+SPARKAI_API_KEY = 'a9ba61362ad9139a36ceb38d2575a2b0'
+SPARKAI_DOMAIN = 'generalv3'
 
 def BotServer():
     connection, address = server.accept()
     print(connection, address)
     recv_str = connection.recv(1024)
-    recv_str = recv_str.decode("ascii")
+    recv_str = recv_str.decode("utf8")
     if not recv_str:
         return
     print("receive:    {}".format(recv_str))
 
-    client = poe.Client(token, proxy="http://192.168.31.178:7890")
+    spark = ChatSparkLLM(
+        spark_api_url=SPARKAI_URL,
+        spark_app_id=SPARKAI_APP_ID,
+        spark_api_key=SPARKAI_API_KEY,
+        spark_api_secret=SPARKAI_API_SECRET,
+        spark_llm_domain=SPARKAI_DOMAIN,
+        streaming=False,
+    )
 
-    reply = ""
-    for chunk in client.send_message("capybara", recv_str, with_chat_break=True):
-        reply += chunk["text_new"]
+    messages = [ChatMessage(
+        role="user",
+        content=recv_str
+    )]
+    handler = ChunkPrintHandler()
+    response = spark.generate([messages], callbacks=[handler])
+    reply = response.generations[0][0].text
 
-    # print(reply)
-
-    connection.send(bytes(reply, encoding="ascii"))
+    connection.send(bytes(reply, encoding="utf8"))
     print("send:   {}".format(reply))
 
-    client.purge_conversation("capybara")
     connection.close()
 
 if __name__ == '__main__':
-
-    # token may be reset
-    token = "Y0nlN3ktWV03tsp5YpNaAg%3D%3D"
-
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("localhost", 8888))
     server.listen(10)
@@ -45,5 +53,3 @@ if __name__ == '__main__':
         server.close()
         print("client end, exit!")
         sys.exit()
-    
-    

@@ -27,8 +27,8 @@ ChatService::ChatService()
     // 连接redis
     if(_redis.connect())
     {
-        // 业务实现redisSubsribeMessage(int, string)，注册回调
-        _redis.init_notify_handler(std::bind(&ChatService::redisSubsribeMessage, this, _1, _2));
+        // 业务实现redisSubscribeMessage(int, string)，注册回调
+        _redis.init_notify_handler(std::bind(&ChatService::redisSubscribeMessage, this, _1, _2));
     }
 }
 
@@ -47,7 +47,7 @@ MsgHandler ChatService::getHandler(int msgid)
 }
 
 // 跨服务器的消息来了，找到用户转发给他
-void ChatService::redisSubsribeMessage(int userid, string message)
+void ChatService::redisSubscribeMessage(int userid, string message)
 {
     lock_guard<mutex> lock(_connMutex);
     auto iter = _userConnMap.find(userid);
@@ -182,6 +182,7 @@ void ChatService::reg(const TcpConnectionPtr & conn, json js, Timestamp time)
     LOG_INFO << "reg service";
     string name = js["name"];
     string pwd = js["password"];
+    // LOG_INFO << "name:" << name;
     User user;
     user.setName(name);
     user.setPwd(pwd);

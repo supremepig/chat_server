@@ -1,43 +1,55 @@
 import socket
-import time
-import poe
-import logging
 import sys
+from sparkai.llm.llm import ChatSparkLLM, ChunkPrintHandler
+from sparkai.core.messages import ChatMessage
+
+SPARKAI_URL = 'wss://spark-api.xf-yun.com/v3.1/chat'
+SPARKAI_APP_ID = '34908c2f'
+SPARKAI_API_SECRET = 'ODYwY2RmMGEyNTI4M2QwYjdiZTliOGYz'
+SPARKAI_API_KEY = 'a9ba61362ad9139a36ceb38d2575a2b0'
+SPARKAI_DOMAIN = 'generalv3'
 
 def BotServer():
-    token = "Y0nlN3ktWV03tsp5YpNaAg%3D%3D"
-
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(("localhost", 8888))
-    server.listen(10) 
     connection, address = server.accept()
     print(connection, address)
+    recv_str = connection.recv(1024)
+    recv_str = recv_str.decode("ascii")
+    if not recv_str:
+        return
+    print("receive:    {}".format(recv_str))
 
-    while True:
-        recv_str = connection.recv(1024)
-        recv_str = recv_str.decode("ascii")
-        if not recv_str:
-            break
-        print("receive:{}".format(recv_str))
+    spark = ChatSparkLLM(
+        spark_api_url=SPARKAI_URL,
+        spark_app_id=SPARKAI_APP_ID,
+        spark_api_key=SPARKAI_API_KEY,
+        spark_api_secret=SPARKAI_API_SECRET,
+        spark_llm_domain=SPARKAI_DOMAIN,
+        streaming=False,
+    )
 
-        client = poe.Client(token, proxy="http://192.168.31.178:7890")
-        if recv_str == "bye":
-            break
-    
-        reply = ""
-        for chunk in client.send_message("capybara", recv_str, with_chat_break=True):
-            reply += chunk["text_new"]
+    messages = [ChatMessage(
+        role="user",
+        content=recv_str
+    )]
+    handler = ChunkPrintHandler()
+    response = spark.generate([messages], callbacks=[handler])
+    reply = response[0][0].text
 
-        print(reply)
-
-        connection.send(bytes(reply, encoding="ascii"))
-        print("send:   {}".format(reply))
+    connection.send(bytes(reply, encoding="ascii"))
+    print("send:   {}".format(reply))
 
     connection.close()
-    server.close()
-    client.purge_conversation("capybara")
-    print("client end, exit!")
-    exit()
 
 if __name__ == '__main__':
-    BotServer()
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("localhost", 8888))
+    server.listen(10)
+
+    try:
+        while True:
+            BotServer()
+
+    except KeyboardInterrupt:
+        server.close()
+        print("client end, exit!")
+        sys.exit()

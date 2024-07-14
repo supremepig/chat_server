@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/server/db/db.h
+string
+-
+mysql/mysql.h
+-
+muduo/base/Logging.h
+-
+
+/home/dsc/chat_server/src/server/db/db.cpp
+db.h
+/home/dsc/chat_server/src/server/db/db.h
+

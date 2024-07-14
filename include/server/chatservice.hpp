@@ -36,8 +36,8 @@ public:
 
     // redis跨服务器消息回调函数的实现
     // clint发消息->对方不在当前服务器->redis消息队列->observer_channel_message()->
-    //    _notify_message_handler()->绑定至redisSubsribeMessage()
-    void redisSubsribeMessage(int userid, string message);
+    //    _notify_message_handler()->绑定至redisSubscribeMessage()
+    void redisSubscribeMessage(int userid, string message);
 
     // 获取sigleton单例的方法
     static ChatService* instance();

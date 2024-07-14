@@ -109,7 +109,7 @@ CREATE TABLE `offlinemessage` (
 
 LOCK TABLES `offlinemessage` WRITE;
 /*!40000 ALTER TABLE `offlinemessage` DISABLE KEYS */;
-INSERT INTO `offlinemessage` VALUES (25,'{\"groupid\":4,\"id\":22,\"msg\":\"hi\",\"msgid\":6,\"name\":\"cza\",\"time\":\"\"}');
+INSERT INTO `offlinemessage` VALUES (25,'{\"groupid\":4,\"id\":22,\"msg\":\"hi\",\"msgid\":6,\"name\":\"dsc\",\"time\":\"\"}');
 /*!40000 ALTER TABLE `offlinemessage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (22,'cza','cza','offline'),(23,'cat','cat','offline'),(24,'aatrox','aatrox','offline'),(25,'jinx','jinx','offline'),(26,'dog','dog','offline'),(27,'master yi','master yi','offline');
+INSERT INTO `user` VALUES (22,'dsc','dsc','offline'),(23,'cat','cat','offline'),(24,'aatrox','aatrox','offline'),(25,'jinx','jinx','offline'),(26,'dog','dog','offline'),(27,'master yi','master yi','offline');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
