@@ -1,14 +1,14 @@
 # 基于muduo网络库的集群服务器项目 #
 
 基于muduo网络库的集群服务器，可以实现跨服务器的聊天功能  
-支持接入chatGPT/Claude/Sage和机器人对话
+支持接入讯飞星火大模型和机器人对话
 
 1. 基于muduo网络库的ThreadPool Reactor  
 2. 基于json序列化与反序列化的消息收发协议  
 3. 基于mysql设计聊天服务器的数据库  
 4. 基于nginx实现tcp负载均衡  
 5. 基于redis实现服务器间通信  
-6. 基于Quora's Poe逆向工程，向POE发送HTTP请求，实现用户与机器人的对话  
+6. 基于讯飞星火大模型API，发送HTTP请求，实现用户与机器人的对话  
 
 ## Enviornment ##
 
@@ -94,9 +94,9 @@ sudo make install
 sudo ldconfig /usr/local/lib
 ```
 
-[poe-api](https://github.com/ading2210/poe-api)
+[讯飞星火]
 ```bash
-pip install poe-api
+python ./python/botserver.py
 ```
 
 ## run ##
