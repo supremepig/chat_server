@@ -129,6 +129,7 @@ cd ../bin
 ./client 127.0.0.1 8000
 ```
 
-<image src="imgs/demo1.png">
-<image src="imgs/demo2.png">
-<image src="imgs/demo3.png">
+<image src="imgs/1.png">
+<image src="imgs/2.png">
+<image src="imgs/3.png">
+<image src="imgs/4.png">
