@@ -383,8 +383,71 @@ unordered_map<string, function<void(int, string)>> commandHandlerMap =
     {"logout", logout}
 };
 
-
 void mainMenu(int clientfd)
+{
+    help();
+    char buffer[1024] = {0};
+    while(mainMenuRunning)
+    {
+        cout << "write command: " << endl;
+        cin.getline(buffer, 1024);
+        string s(buffer);
+
+
+        // connect robot server
+        int robotfd = socket(AF_INET, SOCK_STREAM, 0);
+        if(-1 == robotfd)
+        {
+            cerr << "robot socket create failed" <<endl;
+        }
+        sockaddr_in robot_server;
+        memset(&robot_server, 0, sizeof(sockaddr_in));
+        robot_server.sin_addr.s_addr = inet_addr("127.0.0.1");
+        robot_server.sin_family = AF_INET;
+        robot_server.sin_port = htons(8888);
+        if(-1 == connect(robotfd, (sockaddr*)&robot_server, sizeof(sockaddr_in)))
+        {
+            cerr << "connect robot server error" << endl;
+            close(robotfd);
+            exit(-1);
+        }
+
+        int len = send(robotfd, s.c_str(), strlen(s.c_str())+1, 0);
+        if(-1 == len)
+        {
+            cerr << "send robot-chat msg failed" << endl;
+        }
+
+        char answer[4096] = {0};
+        recv(robotfd, answer, 4096, 0);
+        string commandbuf = answer;
+
+
+
+        string command;
+        int index = commandbuf.find(":");
+        if(-1 == index)
+        {
+            command = commandbuf;
+        }
+        else
+        {
+            command = commandbuf.substr(0, index);
+        }
+        auto iter = commandHandlerMap.find(command);
+        if(iter == commandHandlerMap.end())
+        {
+            cerr << "invalid command" << endl;
+            cin.clear();
+            continue;
+        }
+        iter->second(clientfd, commandbuf.substr(index+1, commandbuf.size()-index));
+
+    }
+}
+
+
+void mainMenuOld(int clientfd)
 {
     help();
     char buffer[1024] = {0};

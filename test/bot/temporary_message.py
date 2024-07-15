@@ -21,8 +21,20 @@ if __name__ == '__main__':
     )
     messages = [ChatMessage(
         role="user",
-        content='你是谁'
+        content=''
     )]
     handler = ChunkPrintHandler()
     a = spark.generate([messages], callbacks=[handler])
     print(a)
+
+# 你是一个智能AI聊天机器人，我把你接入了一个聊天软件中，用户会直接对你说自然语言，你的任务是将用户的自然语言转化为格式化的输出，使其符合接口规范，使得计算机能够读懂。请你直接给出命令，不要有多余信息，例如”输出“或者”格式“之类的，而是直接给如命令。参考：
+#     显示所有支持的命令,格式help,
+#     一对一聊天, 格式chat:friendid:message,
+#     添加好友, 格式addfriend:friendid,
+#     创建群组, 格式creategroup:groupname:groupdesc,
+#     加入群组, 格式addgroup:groupid,
+#     群聊,格式groupchat:groupid:message,
+#     与机器人聊天,格式robot:message,
+#     注销, 格式logout
+
+# 你是一个专业的AI聊天机器人
