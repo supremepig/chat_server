@@ -1,7 +1,18 @@
-# 基于muduo网络库的集群服务器项目 #
+# 基于muduo网络库的AI智能集群服务器项目 #
 
 基于muduo网络库的集群服务器，可以实现跨服务器的聊天功能  
-支持接入讯飞星火大模型和机器人对话
+接入讯飞星火大模型，使得用户可以通过自然语言自由地使用该软件，不仅可以实现通讯的基本功能，也能与机器人对话。
+
+聊天基本界面：
+<image src="imgs/chatbot1.png">
+客户登录界面：
+<image src="imgs/client1.png">
+使用自然语言与好友对话：（告诉我的猫我要回家了）
+<image src="imgs/chat1.png">
+使用自然语言在群聊中发言：（猫在home群聊中说我饿了）
+<image src="imgs/groupchat1.png">
+使用自然语言直接向AI问问题：（我问AI猫喜欢什么）
+<image src="imgs/bot1.png">
 
 1. 基于muduo网络库的ThreadPool Reactor  
 2. 基于json序列化与反序列化的消息收发协议  
@@ -94,7 +105,7 @@ sudo make install
 sudo ldconfig /usr/local/lib
 ```
 
-[讯飞星火]
+[讯飞星火](https://xinghuo.xfyun.cn/sparkapi)
 ```bash
 python ./python/botserver.py
 ```
@@ -129,7 +140,3 @@ cd ../bin
 ./client 127.0.0.1 8000
 ```
 
-<image src="imgs/1.png">
-<image src="imgs/2.png">
-<image src="imgs/3.png">
-<image src="imgs/4.png">
