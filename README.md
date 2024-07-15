@@ -5,12 +5,16 @@
 
 聊天基本界面：
 <image src="imgs/chatbot1.png">
+
 客户登录界面：
 <image src="imgs/client1.png">
+
 使用自然语言与好友对话：（告诉我的猫我要回家了）
 <image src="imgs/chat1.png">
+
 使用自然语言在群聊中发言：（猫在home群聊中说我饿了）
 <image src="imgs/groupchat1.png">
+
 使用自然语言直接向AI问问题：（我问AI猫喜欢什么）
 <image src="imgs/bot1.png">
 
@@ -19,7 +23,7 @@
 3. 基于mysql设计聊天服务器的数据库  
 4. 基于nginx实现tcp负载均衡  
 5. 基于redis实现服务器间通信  
-6. 基于讯飞星火大模型API，发送HTTP请求，实现用户与机器人的对话  
+6. 基于讯飞星火大模型API，发送HTTP请求，实现智能识别用户需求，给出相应指令或直接回答用户问题 
 
 ## Enviornment ##
 
