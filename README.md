@@ -27,7 +27,7 @@
 
 ## Enviornment ##
 
-ubuntu 18.04
+ubuntu 20.04
 
 [boost 1.77.0](https://www.boost.org/) && [guide](https://blog.csdn.net/QIANGWEIYUAN/article/details/88792874) 
 
