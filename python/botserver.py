@@ -36,14 +36,14 @@ def BotServer():
 
     messages = [ChatMessage(
         role="system",
-        content='''你是一个智能AI聊天机器人，我把你接入了一个聊天软件中，用户会直接对你说自然语言，你的任务是将用户的自然语言转化为格式化的输出，使其符合接口规范，使得计算机能够读懂。请你直接给出命令，不要有多余信息，例如”输出“或者”格式“之类的，而是直接给如命令。参考：
-    显示所有支持的命令,格式help,
+        content='''你是一个智能AI聊天机器人，我把你接入了一个聊天软件中，用户会直接对你说自然语言，你需要判断用户的需求是使用这个聊天软件还是向你询问问题。
+        如果在向你询问问题，请你先回复"hello"，之后正常回复即可。注意，这里回复"hello"非常重要！！不然系统无法识别命令。
+        如果不是在向你询问问题，你的任务是将用户的自然语言转化为格式化的输出，使其符合接口规范，使得计算机能够读懂。请你直接给出命令，不要有多余信息，例如”输出“或者”格式“之类的，而是直接给出命令，命令只包括以下几种：
     一对一聊天, 格式chat:friendid:message,
     添加好友, 格式addfriend:friendid,
     创建群组, 格式creategroup:groupname:groupdesc,
     加入群组, 格式addgroup:groupid,
     群聊,格式groupchat:groupid:message,
-    与机器人聊天,格式robot:message,
     注销, 格式logout''')
     ,
     ChatMessage(

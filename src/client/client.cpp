@@ -421,27 +421,31 @@ void mainMenu(int clientfd)
         char answer[4096] = {0};
         recv(robotfd, answer, 4096, 0);
         string commandbuf = answer;
+        if (commandbuf.rfind("hello", 0) == 0) { // rfind("hello", 0) == 0 检查字符串是否以"hello"开头
+            cout << commandbuf << endl;
+        } else {
+            string command;
+            int index = commandbuf.find(":");
+            if(-1 == index)
+            {
+                command = commandbuf;
+            }
+            else
+            {
+                command = commandbuf.substr(0, index);
+            }
+            auto iter = commandHandlerMap.find(command);
+            if(iter == commandHandlerMap.end())
+            {
+                cerr << "invalid command" << endl;
+                cin.clear();
+                continue;
+            }
+            iter->second(clientfd, commandbuf.substr(index+1, commandbuf.size()-index));
+        }
 
 
-
-        string command;
-        int index = commandbuf.find(":");
-        if(-1 == index)
-        {
-            command = commandbuf;
-        }
-        else
-        {
-            command = commandbuf.substr(0, index);
-        }
-        auto iter = commandHandlerMap.find(command);
-        if(iter == commandHandlerMap.end())
-        {
-            cerr << "invalid command" << endl;
-            cin.clear();
-            continue;
-        }
-        iter->second(clientfd, commandbuf.substr(index+1, commandbuf.size()-index));
+        
 
     }
 }
@@ -481,13 +485,19 @@ void mainMenuOld(int clientfd)
 void help(int clientfd, string s)
 {
     cout << "command list:" << endl;
-    for(auto &p : commandMap)
-    {
-        if(p.first.size() > 6)
-            cout << p.first << " \t" << p.second << endl;
-        else
-            cout << p.first << " \t\t" << p.second << endl;
-    } 
+    cout << "Explore Your Options:\n"
+         << "Ask whatever you are curious about!\n"
+         << "Chat with anyone you want!\n"
+         << "Start a group chat!\n"
+         << "Add friends or join groups!\n"
+         << "Logout when you're done!" << endl;
+    // for(auto &p : commandMap)
+    // {
+    //     if(p.first.size() > 6)
+    //         cout << p.first << " \t" << p.second << endl;
+    //     else
+    //         cout << p.first << " \t\t" << p.second << endl;
+    // } 
     cout << "=================================================" << endl;
 }
 
